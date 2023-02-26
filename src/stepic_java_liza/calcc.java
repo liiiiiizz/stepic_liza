@@ -1,77 +1,42 @@
 package stepic_java_liza;
 
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
-
+import java.io.File;
 public class calcc{
-    public static void main(String[] args) throws Exception {
-        FileReader reader = new FileReader("C:\\Users\\lizad\\IdeaProjects\\stepic_liza\\src\\stepic_java_liza\\input1.txt");
-        Scanner sc = new Scanner(reader);
+    public static void main(String[] args) throws FileNotFoundException {
+    File file = new File("C:\\Users\\lizad\\IdeaProjects\\stepic_liza\\src\\stepic_java_liza\\inputt.txt");
+    PrintWriter printWriter = new PrintWriter("C:\\Users\\lizad\\IdeaProjects\\stepic_liza\\src\\stepic_java_liza\\output.txt");
 
-        FileWriter fw = new FileWriter("C:\\Users\\lizad\\IdeaProjects\\stepic_liza\\src\\stepic_java_liza\\output1.txt");
-        while (sc.hasNextLine()) {
-            String string = sc.nextLine();
-            String[] str = string.split(" ");
-            try {
-                if (!isNumeric(str[0]) || !isNumeric(str[2])) {
-                    fw.write(string + " = Error! Not number\n");
-                    throw new Exception("Error! Not number");
-                }
-                if (!str[1].equals("+") && !str[1].equals("-") && !str[1].equals("*") && !str[1].equals("/")) {
-                    fw.write(string + " = Operation Error!\n");
-                    throw new Exception("Operation Error!");
-                }
-                if (str[1].equals("/") && str[2].equals("0")) {
-                    fw.write(string + " = Error! Division by zero\n");
-                    throw new Exception("Error! Division by zero");
-                }
-                if (str[1].equals("+")) {
-                    System.out.println(string + " = " + addition(Double.parseDouble(str[0]), Double.parseDouble(str[2])));
-                    fw.write(string + " = " + addition(Double.parseDouble(str[0]), Double.parseDouble(str[2])) + "\n");
-                }
-                if (str[1].equals("-")) {
-                    System.out.println(string + " = " + extractor(Double.parseDouble(str[0]), Double.parseDouble(str[2])));
-                    fw.write(string + " = " + extractor(Double.parseDouble(str[0]), Double.parseDouble(str[2])) + "\n");
-                }
-                if (str[1].equals("*")) {
-                    System.out.println(string + " = " + multiplier(Double.parseDouble(str[0]), Double.parseDouble(str[2])));
-                    fw.write(string + " = " + multiplier(Double.parseDouble(str[0]), Double.parseDouble(str[2])) + "\n");
-                }
-                if (str[1].equals("/")) {
-                    System.out.println(string + " = " + divider(Double.parseDouble(str[0]), Double.parseDouble(str[2])));
-                    fw.write(string + " = " + divider(Double.parseDouble(str[0]), Double.parseDouble(str[2])) + "\n");
-                }
-            } catch (Exception ex) {
-
-                System.out.println(ex.getMessage());
-            }
-        }
-        fw.close();
-    }
-
-    public static boolean isNumeric(String str) {
+    Scanner sc = new Scanner(file);
         try {
-            Double.parseDouble(str);
-            return true;
+            Double x = Double.parseDouble(sc.next());
+            String sym = sc.next();
+            Double y = Double.parseDouble(sc.next());
+            if (sym.equals("+")) {
+                printWriter.println(x + y);
+                printWriter.close();
+            } else if (sym.equals("-")) {
+                printWriter.println(x - y);
+            } else if (sym.equals("*")) {
+                printWriter.println(x * y);
+            } else if (sym.equals("/")) {
+                if (y == 0) {
+                    throw new ArithmeticException();
+                } else {
+                    printWriter.println(x / y);
+                }
+            } else {
+                throw new UnsupportedOperationException();
+            }
         } catch (NumberFormatException e) {
-            return false;
+            System.out.println("Error! Not number");
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Operation Error!");
+        } catch (ArithmeticException e) {
+            System.out.println("Error! Division by zero");
         }
-    }
+    }}
 
-    static double addition(double a, double b) {
-        return a + b;
-    }
-
-    static double extractor(double a, double b) {
-        return a - b;
-    }
-
-    static double multiplier(double a, double b) {
-        return a * b;
-    }
-
-    static double divider(double a, double b) {
-        return a / b;
-    }
-}
