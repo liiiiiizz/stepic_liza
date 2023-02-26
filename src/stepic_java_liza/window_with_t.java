@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class window_with_t {
     static JFrame frame = new JFrame();//создаем форму
-    static int size=600;//размер текстуры
+    static int size=50;//размер текстуры
 
     public static class AddTextura {//класс для добавления текстур
         public JLabel l; // для отображение текста/картинок
@@ -21,7 +21,7 @@ public class window_with_t {
     }
 
     public static void main(String[] args) throws IOException {
-        int width=500, height=500;//задаем размер окна
+        int width=800, height=600;//задаем размер окна
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//способ выхода из формы
         frame.setTitle("Текстура травы");//заголовок формы
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();//определяем разрешение монитора
